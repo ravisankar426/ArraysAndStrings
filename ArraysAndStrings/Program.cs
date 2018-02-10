@@ -30,7 +30,7 @@ namespace Strings
 
             //Console.WriteLine(IsPalindrome("anna".ToCharArray()));
 
-            //Check if a Palindrome permutation
+            //Check if a Palindrome permutation 
 
             Console.WriteLine(CheckPalindromePermutation("taco cat"));
 
