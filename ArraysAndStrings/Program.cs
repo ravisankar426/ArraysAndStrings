@@ -67,6 +67,7 @@ namespace Strings
             return new string(sortedChars);
         }
 
+        //Anagram other meaning
         public static bool SameCharacterCounts(string s1, string s2)
         {
             int[] chars = new int[128];
