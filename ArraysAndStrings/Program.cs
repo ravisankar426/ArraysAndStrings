@@ -32,7 +32,9 @@ namespace Strings
 
             //Check if a Palindrome permutation 
 
-            Console.WriteLine(CheckPalindromePermutation("taco cat"));
+            //Console.WriteLine(CheckPalindromePermutation("taco cat"));
+
+            Console.WriteLine(IsAnagram("breeze","ezerb"));
 
             Console.Read();
         }
@@ -164,6 +166,30 @@ namespace Strings
             }
             return true;
 
+        }
+
+        public static bool IsAnagram(string s1, string s2)
+        {
+            if (s1.Length != s2.Length) return false;
+
+            int[] chars = new int[128];
+            int char_int;
+
+            for (int i = 0; i < s1.Length; i++)
+            {
+                char_int = (int)s1[i];
+                chars[char_int]++;
+            }
+
+            for (int i = 0; i < s2.Length; i++)
+            {
+                char_int = (int)s2[i];
+                chars[char_int]--;
+                if (chars[char_int] < 0)
+                    return false;
+            }
+
+            return true;
         }
 
     }
