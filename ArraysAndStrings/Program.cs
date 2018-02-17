@@ -34,7 +34,11 @@ namespace Strings
 
             //Console.WriteLine(CheckPalindromePermutation("taco cat"));
 
-            Console.WriteLine(IsAnagram("breeze","ezerb"));
+            //Console.WriteLine(IsAnagram("breeze","ezerb"));
+
+            string[] strings = new string[] { "apple","zoo","leapp","ozo","lime","ooz","mile","pink"};
+
+            GetAnagramGroups(strings);
 
             Console.Read();
         }
@@ -190,6 +194,22 @@ namespace Strings
             }
 
             return true;
+        }
+
+        public static void GetAnagramGroups(string[] strings)
+        {
+            Dictionary<string, List<string>> dict = new Dictionary<string, List<string>>();
+            List<List<string>> result = new List<List<string>>();
+            foreach (string str in strings)
+            {
+                char[] tempCharArray = str.ToCharArray();
+                Array.Sort(tempCharArray);
+                string temp = new string(tempCharArray);
+                if (dict.ContainsKey(temp))
+                    dict[temp].Add(str);
+                else
+                    dict.Add(temp, new List<string> { str });
+            }
         }
 
     }

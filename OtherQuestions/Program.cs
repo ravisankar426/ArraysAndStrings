@@ -15,7 +15,7 @@ namespace OtherQuestions
         }
 
         public static int ConvertStringToInt(string str)
-        {
+        {            
             char[] chars = str.ToCharArray();
             int result = 0;
             int counter = 0;
@@ -50,5 +50,7 @@ namespace OtherQuestions
             }
             return number;
         }
+
+       
     }
 }
