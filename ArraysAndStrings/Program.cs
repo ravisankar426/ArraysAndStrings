@@ -36,9 +36,13 @@ namespace Strings
 
             //Console.WriteLine(IsAnagram("breeze","ezerb"));
 
-            string[] strings = new string[] { "apple","zoo","leapp","ozo","lime","ooz","mile","pink"};
+            //string[] strings = new string[] { "apple","zoo","leapp","ozo","lime","ooz","mile","pink"};
 
-            GetAnagramGroups(strings);
+            //GetAnagramGroups(strings);
+
+            //Top2 most occured strings
+            List<string> strings = new List<string>() { "pa","pb","pa","pb","pc","pd","pe","pf","pc"};
+            GetListTop2Most(strings);
 
             Console.Read();
         }
@@ -212,7 +216,57 @@ namespace Strings
             }
         }
 
+        public static List<string> GetListTop2Most(List<string> strings) {
+            List<string> result = new List<string>();
+            Dictionary<string, int> counts = new Dictionary<string, int>();
+            Dictionary<int, List<string>> order = new Dictionary<int, List<string>>();
+            int count = 0;
+            bool completed = false;
 
+            //strings.Sort();
+            foreach (string str in strings) {
+                if (counts.ContainsKey(str))
+                {
+                    counts[str]++;
+                }
+                else {
+                    counts.Add(str,1);
+                }
+            }
+
+            foreach (string key in counts.Keys) {
+                if (order.ContainsKey(counts[key]))
+                {
+                    order[counts[key]].Add(key);
+                }
+                else {
+                    order[counts[key]] = new List<string> { key};
+                }
+            }
+
+            var orders = from pair in order orderby pair.Key descending select pair;
+
+            foreach (KeyValuePair<int, List<string>> k in orders) {
+                if (!completed)
+                {
+                    foreach (string str in k.Value)
+                    {
+                        if (count < 2)
+                        {
+                            result.Add(str);
+                            count++;
+                        }
+                        else
+                        {
+                            completed = true;
+                        }
+                    }
+
+                }
+            }
+
+            return result;
+        }
 
     }
 }
