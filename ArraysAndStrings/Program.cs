@@ -265,7 +265,7 @@ namespace Strings
                 }
             }
 
-            return result;
+            return result; 
         }
 
     }
