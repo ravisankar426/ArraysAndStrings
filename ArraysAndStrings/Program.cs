@@ -269,7 +269,7 @@ namespace Strings
                 }
             }
 
-            return result;
+            return result; 
         }
 
         public static List<string> GetListTop2MostPQ(List<string> strings)
