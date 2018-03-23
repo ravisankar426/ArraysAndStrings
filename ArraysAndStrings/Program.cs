@@ -41,8 +41,12 @@ namespace Strings
             //GetAnagramGroups(strings);
 
             //Top2 most occured strings
-            List<string> strings = new List<string>() { "pa","pb","pa","pb","pc","pd","pe","pf","pc"};
-            GetListTop2Most(strings);
+            List<string> strings = new List<string>() { "pb","pc","pd","pe", "pa", "pf", "pb", "pa","pc","pa","pf","pd","pf","pf","pe","pf"};
+            //GetListTop2Most(strings);
+            strings=GetListTop2MostPQ(strings);
+
+            foreach (string str in strings)
+                Console.WriteLine(str);
 
             Console.Read();
         }
@@ -268,5 +272,155 @@ namespace Strings
             return result;
         }
 
+        public static List<string> GetListTop2MostPQ(List<string> strings)
+        {
+            List<string> result = new List<string>();
+            Dictionary<string, int> counts = new Dictionary<string, int>();
+            PriorityQueue pq = new PriorityQueue();
+
+            //strings.Sort();
+            foreach (string str in strings)
+            {
+                if (counts.ContainsKey(str))
+                {
+                    counts[str]++;
+                }
+                else
+                {
+                    counts.Add(str, 1);
+                }
+            }
+
+            foreach (var key in counts.Keys) {
+                ProductCounts productCount = new ProductCounts();
+                productCount.product = key;
+                counts.TryGetValue(key, out productCount.count);
+                pq.Add(productCount);
+            }
+
+            result.Add(pq.Poll().product);
+            result.Add(pq.Poll().product);
+
+            return result;
+        }
+
+    }
+
+    public class ProductCounts
+    {
+        public int count;
+        public string product;
+        public ProductCounts() { }
+        public ProductCounts(int count, string product)
+        {
+            this.count = count;
+            this.product = product;
+        }
+    }
+
+    public class PriorityQueue
+    {       
+        ProductCounts[] productCounts;
+        int size=0;
+       
+
+        public PriorityQueue()
+        {
+            productCounts = new ProductCounts[size];
+        }
+
+        public bool HasParent(int index)
+        {
+            return index > 0;
+        }
+        public bool HasLeftChild(int index)
+        {
+            return GetLeftIndex(index) < productCounts.Length;
+        }
+        public bool HasRightChild(int index)
+        {
+            return GetRightIndex(index) < productCounts.Length;
+        }
+        public int GetParentIndex(int index)
+        {
+            return ((index - 1) / 2);
+        }
+        public int GetLeftIndex(int index)
+        {
+            return (index * 2) + 1;
+        }
+        public int GetRightIndex(int index)
+        {
+            return (index * 2) + 2;
+        }
+        public void Swap(int a, int b)
+        {
+            var temp = productCounts[a];
+            productCounts[a] = productCounts[b];
+            productCounts[b] = temp;
+        }
+
+        public ProductCounts Peek()
+        {
+            return productCounts[0];
+        }
+
+        public ProductCounts Poll()
+        {
+            if (productCounts.Length == 0) throw new Exception("There are no products");
+            ProductCounts temp = productCounts[0];
+            productCounts[0] = productCounts[size - 1];
+            size--;
+            HeapifyDown();
+            return temp;
+        }
+
+        public void Add(ProductCounts productCount)
+        {
+            Array.Resize<ProductCounts>(ref productCounts, size + 1);
+            size++;
+            productCounts[size - 1] = productCount;
+            HeapifyUp();
+        }
+
+        public void HeapifyDown()
+        {
+            int index = 0;
+            int largestIndex;
+            while (HasLeftChild(index))
+            {
+                largestIndex = GetLeftIndex(index);
+                if (HasRightChild(index) && productCounts[GetRightIndex(index)].count > productCounts[GetLeftIndex(index)].count)
+                    largestIndex = GetRightIndex(index);
+                if (productCounts[index].count < productCounts[largestIndex].count)
+                {
+                    Swap (index, largestIndex);
+                    index = largestIndex;
+                }
+                else
+                {
+                    break;
+                }
+            }
+        }
+
+        public void HeapifyUp()
+        {
+            int index = size - 1;
+            int parentIndex;
+            while (HasParent(index))
+            {
+                parentIndex = GetParentIndex(index);
+                if (productCounts[index].count > productCounts[parentIndex].count)
+                {
+                    Swap(index, parentIndex);
+                    index = GetParentIndex(index);
+                }
+                else
+                {
+                    break;
+                }
+            }
+        }
     }
 }
