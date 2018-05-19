@@ -12,7 +12,7 @@ namespace Strings
         {
             //Algorithm to check if a string has all unique characters
 
-            //Console.WriteLine(UniqueCharacteredString("aple"));
+            Console.WriteLine(UniqueCharacteredString("apple"));
 
             //Check if two strings are permutation of each other
 
@@ -43,19 +43,18 @@ namespace Strings
             //Top2 most occured strings
             List<string> strings = new List<string>() { "pb","pc","pd","pe", "pa", "pf", "pb", "pa","pc","pa","pf","pd","pf","pf","pe","pf"};
             //GetListTop2Most(strings);
-            strings=GetListTop2MostPQ(strings);
+            //strings=GetListTop2MostPQ(strings);
 
-            foreach (string str in strings)
-                Console.WriteLine(str);
+            //foreach (string str in strings)
+                //Console.WriteLine(str);
 
             Console.Read();
         }
 
         public static bool UniqueCharacteredString(string str) {
             bool[] char_set = new bool[128];
-            var charArray = str.ToCharArray();
             for (int i = 0; i < str.Length; i++) {
-                int val = (int)charArray[i];
+                int val = str[i];
 
                 if (char_set[val])
                 {
