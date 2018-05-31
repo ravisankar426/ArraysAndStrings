@@ -26,14 +26,68 @@ namespace Arrays
 
             //Sort Colors
 
-            char[] colors = new char[] { 'R','G','R','G','R','G'};
-            colors = SortColors(colors);
+            //char[] colors = new char[] { 'R','G','R','G','R','G'};
+            //colors = SortColors(colors);
 
-            foreach (char ch in colors) {
-                Console.WriteLine(ch.ToString());
-            }
+            //foreach (char ch in colors) {
+            //    Console.WriteLine(ch.ToString());
+            //}
+
+            int[] arr = new int[] { 7, 10, 4, 3, 20, 15 };
+            QuickSelectResult result = new QuickSelectResult();
+            result.stop = false;
+
+            Console.WriteLine(QuickSelect(arr, 0, arr.Length - 1, 3,result).number.ToString());
 
             Console.Read();
+        }
+
+        public static QuickSelectResult QuickSelect(int[] arr, int left, int right, int k,QuickSelectResult result)
+        {
+            if (left < right)
+            {
+                int pi = Partition(arr, left, right);
+
+                if (pi + 1 == k)
+                {
+                    result = new QuickSelectResult();
+                    result.stop = true;
+                    result.number = arr[pi];
+                }
+
+                if(!result.stop)                
+                    result=QuickSelect(arr, left, pi - 1, k,result);
+                if (!result.stop)
+                    result =QuickSelect(arr, pi + 1, right, k,result);                
+
+                return result;
+            }
+            return result;
+        }
+
+        public static int Partition(int[] arr, int left, int right)
+        {
+            int pivot = arr[right];
+            int i = left-1;
+
+            for (int j = left; j <= right - 1; j++)
+            {
+                if (arr[j] < pivot)
+                {
+                    i++;
+                    Swap(arr, i, j);
+                }
+            }
+
+            Swap(arr, (i + 1), right);
+            return (i + 1);
+        }
+
+        public static void Swap(int[] arr, int i, int j)
+        {
+            var temp = arr[i];
+            arr[i] = arr[j];
+            arr[j] = temp;
         }
 
         public static int[,] RotateMatrix(int[,] matrix)
@@ -81,5 +135,11 @@ namespace Arrays
 
             return colors;
         }
+    }
+
+    public class QuickSelectResult
+    {
+        public int number { get; set; }
+        public bool stop { get; set; }
     }
 }

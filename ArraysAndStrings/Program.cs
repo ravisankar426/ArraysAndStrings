@@ -87,13 +87,13 @@ namespace Strings
             int char_int;
 
             for (int i = 0; i < s1.Length; i++) {
-                char_int = (int)s1[i];
+                char_int = s1[i];
                 chars[char_int]++;
             }
 
             for (int i = 0; i < s2.Length; i++)
             {
-                char_int = (int)s2[i];
+                char_int = s2[i];
                 chars[char_int]--;
                 if (chars[char_int] < 0)
                     return false;
